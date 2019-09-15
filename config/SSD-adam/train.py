@@ -46,7 +46,7 @@ parser.add_argument('--gpu', default=0, type=int,
 
 args = parser.parse_args()
 
-os.environ['GPU_VISIBLE_DEVICES'] = str(args.gpu)
+os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
 
 if torch.cuda.is_available():
     if args.cuda:
