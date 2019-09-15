@@ -23,9 +23,9 @@ def main(args):
         all_results = sorted(all_results, key=lambda x: x[1]['loc_loss'] + x[1]['conf_loss'], reverse=False)
 
         for res in all_results[args.limit:]:
-            if not os.path.exists("./train_log/models/{}".format(res[0])):
+            if not os.path.exists("./train_log/model/{}.pth".format(res[0])):
                 continue
-            cmd = "rm ./train_log/models/{}".format(res[0])
+            cmd = "rm ./train_log/model/{}.pth".format(res[0])
             os.system(cmd)
 
         keys = ['loss', 'loc_loss', 'conf_loss']
