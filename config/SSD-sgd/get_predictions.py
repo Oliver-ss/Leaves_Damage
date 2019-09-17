@@ -146,7 +146,7 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size):
             dets.append([xs, ys, xe, ye, score, class_index])
 
         keep = nms(dets, 0.35)
-        data[img_file] = keep
+        data[img_file] = list(keep)
     return data
 
 
