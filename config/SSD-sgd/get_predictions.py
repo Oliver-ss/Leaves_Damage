@@ -166,4 +166,4 @@ if __name__ == '__main__':
     if not os.path.exists('train_log/test'):
         os.makedirs('train_log/test')
     with open('train_log/test/predictions.json', 'w') as f:
-        json.load(data)
+        json.dump(data, f)
