@@ -226,7 +226,7 @@ def train():
                 json.dump(loss_file, f)
 
     torch.save(ssd_net.state_dict(),
-            args.save_folder + '' + 'leaves' + '.pth')
+            args.save_folder + 'model/' + 'leaves' + '.pth')
 
 def val(model, dataloader, criterion):
     model.eval()  # evaluation mode
