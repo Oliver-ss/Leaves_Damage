@@ -111,10 +111,10 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size, skip=300):
         img_file = img_names[i]
         img = cv2.imread(img_file)
         img = img[:,:,::-1]
-        
+
         # skip the image boundary
         h, w, c = img.shape
-        img = img[skip:h-skip, skip:w-skip, :]
+        img = img[skip:h-skip, :, :]
 
         h, w, c = img.shape
         imgs = []
@@ -144,7 +144,7 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size, skip=300):
             col_num = tile_ind % w_num
             # compute offset
             ys += row_num * stride + skip
-            xs += col_num * stride + skip
+            xs += col_num * stride
             xe = xs + xdiff
             ye = ys + ydiff
             score = bbox[i]['score']

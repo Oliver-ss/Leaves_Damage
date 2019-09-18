@@ -90,7 +90,7 @@ def save_img(pred, gt, save_folder='train_log/test_img/', thres=0.6):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("thred", type=float)
+    parser.add_argument("thres", type=float)
     args = parser.parse_args()
 
     with open('train_log/test/predictions.json') as f:
