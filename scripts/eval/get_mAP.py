@@ -6,7 +6,7 @@
  ************************************************************************'''
 import numpy as np
 import os
-
+import json
 INDEX = {
         'margin': 0, 'interior': 1, 'skel': 2, 'scrap':3, 'stipp': 4,
         'blotch': 5, 'serp': 6, 'undef': 7, 'normmar': 8, 'normint': 9,
@@ -33,7 +33,10 @@ def parse_rec(filename):
                 obj['difficult'] = False
             obj['label'] = min(2, label) # conclue other classes as 1 class
 
-            objects[label].append(obj)
+            objects[obj['label']].append(obj)
     return objects
+
+if __name__ == "__main__":
+    print(parse_rec("../../Data/Labels/label_test_new.json"))
 
 
