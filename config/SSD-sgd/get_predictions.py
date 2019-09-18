@@ -93,7 +93,7 @@ def nms(dets, thresh):
     return keep
 
 
-def test_img(net_filepath, img_folder, tile, overlap, batch_size):
+def test_img(net_filepath, img_folder, tile, overlap, batch_size, skip=300):
     # load net
     num_classes = config.num_classes
     net = build_ssd('test', 300, num_classes)  # initialize SSD
@@ -106,11 +106,15 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size):
         labels = json.load(f)
     img_names = list(labels.keys())
     data = {}
-    #for i in tqdm(range(len(img_names))):
-    for i in range(len(img_names)):
+    for i in tqdm(range(len(img_names))):
+    #for i in range(len(img_names)):
         img_file = img_names[i]
         img = cv2.imread(img_file)
         img = img[:,:,::-1]
+        
+        # skip the image boundary
+        h, w, c = img.shape
+        img = img[skip:h-skip, skip:w-skip, :]
 
         h, w, c = img.shape
         imgs = []
@@ -139,8 +143,8 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size):
             row_num = tile_ind // w_num
             col_num = tile_ind % w_num
             # compute offset
-            ys += row_num * stride
-            xs += col_num * stride
+            ys += row_num * stride + skip
+            xs += col_num * stride + skip
             xe = xs + xdiff
             ye = ys + ydiff
             score = bbox[i]['score']
@@ -162,7 +166,8 @@ if __name__ == '__main__':
     tile = 300
     overlap = 45
     batch_size = 8
-    data = test_img(net_filepath, test_img_file, tile, overlap, batch_size)
+    skip = 300
+    data = test_img(net_filepath, test_img_file, tile, overlap, batch_size, skip)
 
     if not os.path.exists('train_log/test'):
         os.makedirs('train_log/test')
