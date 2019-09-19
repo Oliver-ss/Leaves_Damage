@@ -63,6 +63,7 @@ class Damage_Dataset(data.Dataset):
             label = INDEX[g['label']]
             if label > 6:
                 continue # omit the normal margin, normal interior and undefined damage type
+            label = min(2, label)
             rect = g['rect']
             # to macth the transform format
             rect = [float(rect[0])/width, float(rect[1])/height, float(rect[0]+rect[2])/width, float(rect[1]+rect[3])/height]

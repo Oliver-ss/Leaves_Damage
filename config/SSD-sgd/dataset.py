@@ -124,10 +124,10 @@ def save_images(ds, num):
 
 if __name__ == '__main__':
     import sys
-    sys.path.append("..")
+    #sys.path.append("..")
     from utils import SSDAugmentation
     import torch.utils.data as data
-    ds = Damage_Dataset('train', '../../../Data/Labels/label_train_new.json', transform=SSDAugmentation())
+    ds = Damage_Dataset('train', '../../Data/Labels/label_train_new.json', transform=SSDAugmentation())
     #ds = Damage_Dataset('train', '../../Data/Labels/Validation-3class.json')
-    show_samples(ds, 100)
+    show_samples(ds, 200)
     #save_images(ds, 100)
