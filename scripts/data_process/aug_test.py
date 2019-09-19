@@ -244,7 +244,7 @@ class RandomSampleCrop(object):
                 current_image = image
 
                 # choose the w and h to be 300-500
-                w = random.uniform(240, 360)
+                w = random.uniform(300, 500)
                 h = w
 
                 left = random.uniform(width - w)

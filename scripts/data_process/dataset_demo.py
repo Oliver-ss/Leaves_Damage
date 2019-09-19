@@ -123,7 +123,7 @@ def save_images(ds, num):
 if __name__ == '__main__':
     from aug_test import SSDAugmentation
     import torch.utils.data as data
-    #ds = Damage_Dataset('train', '../../Data/Labels/label_val_new.json', transform=SSDAugmentation())
-    ds = Damage_Dataset('train', '../../Data/Labels/Validation-3class.json')
-    show_samples(ds, 100)
-    #save_images(ds, 100)
+    ds = Damage_Dataset('train', '../../Data/Labels/label_val_new.json', transform=SSDAugmentation())
+    #ds = Damage_Dataset('train', '../../Data/Labels/Validation-3class.json')
+    #show_samples(ds, 100)
+    save_images(ds, 100)
