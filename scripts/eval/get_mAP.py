@@ -57,7 +57,7 @@ class Eval_mAP:
         self.num_classes = num_classes
         self.gt = parse_rect(gt_file, 'gt')
         self.pred = parse_rect(pred_file, 'pred')
-
+    
     def get_result(self, class_index, ovthresh=0.5):
         gt_rects = self.gt[class_index] # a dict, keys are img names
         pred_rects = self.pred[class_index] # a list of all predicted bboxes
@@ -165,9 +165,13 @@ class Eval_mAP:
         return ap
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("pred", type=str)
+    args = parser.parse_args()
     #print(parse_rect("../../Data/Labels/label_test_new.json", 'gt'))
     #print(parse_rect("../../config/SSD-sgd/train_log/test/predictions.json", 'pred'))
-    eval_Damage = Eval_mAP(3, '../../Data/Labels/test_full.json', 'train_log/test/predictions.json')
+    eval_Damage = Eval_mAP(3, '../../Data/Labels/test_full.json', args.pred)
     print(eval_Damage.get_result(0))
     print(eval_Damage.get_result(1))
     #print(eval_Damage.get_result(2))

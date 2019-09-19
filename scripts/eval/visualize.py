@@ -91,12 +91,13 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("thres", type=float)
+    parser.add_argument("pred", type=str)
     args = parser.parse_args()
 
-    with open('train_log/test/predictions.json') as f:
+    with open(args.pred) as f:
         pred = json.load(f)
 
-    with open('../../Data/Labels/label_test_new.json') as f:
+    with open('../../Data/Labels/test_full.json') as f:
         gt = json.load(f)
     
     save_folder = 'train_log/test_img/'
