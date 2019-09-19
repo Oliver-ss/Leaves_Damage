@@ -96,7 +96,7 @@ if __name__ == "__main__":
     with open('train_log/test/predictions.json') as f:
         pred = json.load(f)
 
-    with open('../../Data/Labels/label_test_new.json') as f:
+    with open('../../Data/Labels/test_full.json') as f:
         gt = json.load(f)
     
     save_folder = 'train_log/test_img/'
