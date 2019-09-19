@@ -167,7 +167,7 @@ class Eval_mAP:
 if __name__ == "__main__":
     #print(parse_rect("../../Data/Labels/label_test_new.json", 'gt'))
     #print(parse_rect("../../config/SSD-sgd/train_log/test/predictions.json", 'pred'))
-    eval_Damage = Eval_mAP(3, '../../Data/Labels/label_test_new.json', '../../config/SSD-sgd/train_log/test/predictions.json')
+    eval_Damage = Eval_mAP(3, '../../Data/Labels/label_test_new.json', 'train_log/test/predictions.json')
     print(eval_Damage.get_result(0))
     print(eval_Damage.get_result(1))
     print(eval_Damage.get_result(2))

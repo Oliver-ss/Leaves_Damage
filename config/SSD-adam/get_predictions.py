@@ -44,13 +44,13 @@ def predict(frames, transform, net, tile_number):
         # skip background class
         for i in range(1, detections.size(1)):
             j = 0
-            while detections[k, i, j, 0] >= 0.05:
+            while detections[k, i, j, 0] >= 0.1:
                 pt = (detections[k, i, j, 1:] * scale).cpu().numpy()
                 bbox.append({
                     'score': float(detections[k, i, j, 0].cpu().numpy()),
                     'tile': k + tile_number,  # store the tile index to compute offset of bbox
                     'index': i-1,  # class index
-                    'bbox': pt  # [xs, ys, se, ye]
+                    'bbox': pt.tolist()  # [xs, ys, se, ye]
                 })
                 j += 1
     return bbox
@@ -73,7 +73,7 @@ def nms(dets, thresh):
     while order.size > 0:  
 #order[0]是当前分数最大的窗口，肯定保留  
         i = order[0]  
-        keep.append(dets[i])  
+        keep.append(dets[i].tolist())  
 #计算窗口i与其他所有窗口的交叠部分的面积
         xx1 = np.maximum(x1[i], x1[order[1:]])  
         yy1 = np.maximum(y1[i], y1[order[1:]])  
@@ -93,7 +93,7 @@ def nms(dets, thresh):
     return keep
 
 
-def test_img(net_filepath, img_folder, tile, overlap, batch_size):
+def test_img(net_filepath, img_folder, tile, overlap, batch_size, skip=300):
     # load net
     num_classes = config.num_classes
     net = build_ssd('test', 300, num_classes)  # initialize SSD
@@ -107,9 +107,14 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size):
     img_names = list(labels.keys())
     data = {}
     for i in tqdm(range(len(img_names))):
+    #for i in range(len(img_names)):
         img_file = img_names[i]
         img = cv2.imread(img_file)
         img = img[:,:,::-1]
+
+        # skip the image boundary
+        h, w, c = img.shape
+        img = img[skip:h-skip, :, :]
 
         h, w, c = img.shape
         imgs = []
@@ -138,13 +143,13 @@ def test_img(net_filepath, img_folder, tile, overlap, batch_size):
             row_num = tile_ind // w_num
             col_num = tile_ind % w_num
             # compute offset
-            ys += row_num * stride
+            ys += row_num * stride + skip
             xs += col_num * stride
             xe = xs + xdiff
             ye = ys + ydiff
             score = bbox[i]['score']
             dets.append([xs, ys, xe, ye, score, class_index])
-
+            #print(dets)
         keep = nms(dets, 0.35)
         data[img_file] = keep
     return data
@@ -161,7 +166,8 @@ if __name__ == '__main__':
     tile = 300
     overlap = 45
     batch_size = 8
-    data = test_img(net_filepath, test_img_file, tile, overlap, batch_size)
+    skip = 300
+    data = test_img(net_filepath, test_img_file, tile, overlap, batch_size, skip)
 
     if not os.path.exists('train_log/test'):
         os.makedirs('train_log/test')

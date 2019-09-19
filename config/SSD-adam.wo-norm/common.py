@@ -21,7 +21,7 @@ class Config:
     # for lr decay
     lr_steps = (5000, 10000, 15000)
     max_iter = 20000
-    gamma = 0.1
+    gamma = 0.2
 
     # for cycle lr
     peak_lr = 1e-4

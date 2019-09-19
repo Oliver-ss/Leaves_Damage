@@ -37,7 +37,7 @@ class Damage_Dataset(data.Dataset):
         self.transform = transform
         self.labels = load_json(label_root)
         self.ids = list(self.labels.keys())
-        self.num = [0, 0, 0]
+        #self.num = [0, 0, 0]
 
     def __len__(self):
         return len(self.ids)
@@ -78,8 +78,8 @@ class Damage_Dataset(data.Dataset):
             img, boxes, labels = self.transform(img, target[:, :4], target[:, 4])
             
             # calculate the number of every class
-            for i in labels:
-                self.num[int(i)] += 1
+            #for i in labels:
+            #    self.num[int(i)] += 1
 
             target = np.hstack((boxes, np.expand_dims(labels, axis=1)))
             height, width, channels = img.shape
