@@ -8,7 +8,7 @@ test:
 	python3 get_predictions.py ${MODEL}
 
 mAP:
-	python3 ../../scripts/eval/get_mAP.py
+	python ../../scripts/eval/get_mAP.py
 
 show:
 	python3 ../../scripts/eval/visualize.py ${THRES}
