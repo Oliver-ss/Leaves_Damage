@@ -6,3 +6,9 @@ table:
 
 test:
 	python3 get_predictions.py ${MODEL}
+
+mAP:
+	python ../../scripts/eval/get_mAP.py
+
+show:
+	python3 ../../scripts/eval/visualize.py ${THRES}

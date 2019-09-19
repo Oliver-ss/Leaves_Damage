@@ -171,7 +171,11 @@ def train():
             images, targets = next(batch_iterator)
 
         # calculate the frequency of every class
-        
+        for i in targets:
+            labels = np.array(i)[:,4]
+            for j in labels:
+                num[int(j)] += 1
+
 
         if args.cuda:
             images = Variable(images.cuda())
@@ -197,7 +201,7 @@ def train():
         if iteration % 10 == 0:
             print('timer: %.4f sec.' % (t1 - t0))
             print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ')
-            print(train_dataset.num)
+            print(num)
             if args.visdom:
                 viz.line(
                     X=torch.ones((1, 3)).cpu() * iteration,
