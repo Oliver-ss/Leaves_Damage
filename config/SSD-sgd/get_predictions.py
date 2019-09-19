@@ -162,7 +162,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     net_filepath = args.model
-    test_img_file = '../../Data/Labels/label_test_new.json'
+    test_img_file = '../../Data/Labels/test_full.json'
     tile = 300
     overlap = 45
     batch_size = 8
