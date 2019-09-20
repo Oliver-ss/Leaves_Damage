@@ -15,11 +15,12 @@ from config import *
 import json
 
 INDEX = {
-        'margin': 0, 'interior': 1, 'skel': 2, 'scrap':3, 'stipp': 4,
-        'blotch': 5, 'serp': 6, 'undef': 7, 'normmar': 8, 'normint': 9,
+        'margin': 0, 'interior': 1, 'skel': 2, 'stipp': 3,
+        'blotch': 4, 'serp': 5, 'scrap': 6, 'normmar': 7, 'normint': 8, 'undef': 9,
         }
 
-LABEL = ['margin', 'interior', 'skel', 'scrap', 'stipp', 'blotch', 'serp', 'undef', 'normmar', 'normint']
+LABEL = ['margin', 'interior', 'skel', 'stipp', 'blotch', 'serp', 'scrap', 'normmar', 'normint', 'undef']
+
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 
 def load_json(path):
@@ -63,7 +64,6 @@ class Damage_Dataset(data.Dataset):
             label = INDEX[g['label']]
             if label > 6:
                 continue # omit the normal margin, normal interior and undefined damage type
-            label = min(2, label)
             rect = g['rect']
             # to macth the transform format
             rect = [float(rect[0])/width, float(rect[1])/height, float(rect[0]+rect[2])/width, float(rect[1]+rect[3])/height]
