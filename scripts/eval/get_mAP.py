@@ -32,7 +32,7 @@ def parse_rect(filename, name):
                 obj['name'] = k
                 x, y, w, h = box['rect']
                 obj['bbox'] = [x, y, x+w, y+h]
-                if w < 10 or h < 10:
+                if w < 20 or h < 20:
                     obj['difficult'] = True
                 else:
                     obj['difficult'] = False
