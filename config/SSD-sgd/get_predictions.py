@@ -169,13 +169,13 @@ if __name__ == '__main__':
 
     net_filepath = args.model
     test_img_file = '../../Data/Labels/test_full.json'
-    tile = 300
-    overlap = 45
+    tile = 400
+    overlap = 60
     batch_size = 8
     skip = 300
     data = test_img(net_filepath, test_img_file, tile, overlap, batch_size, skip)
 
     if not os.path.exists('train_log/test'):
         os.makedirs('train_log/test')
-    with open('train_log/test/predictions.json', 'w') as f:
+    with open('train_log/test/predictions_big_patch.json', 'w') as f:
         json.dump(data, f)
