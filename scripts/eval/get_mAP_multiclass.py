@@ -19,14 +19,14 @@ def parse_rect(filename, name):
     with open(filename) as f:
         data = json.load(f)
     if name == 'gt':
-        objects = {0: {}, 1: {}, 2:{}}
+        objects = {0: {}, 1: {}, 2: {}, 3:{}}
     elif name == 'pred':
-        objects = {0: [], 1: [], 2: []}
+        objects = {0: [], 1: [], 2: [], 3:[]}
     for k in data.keys():
         for box in data[k]:
             if name == 'gt':
                 label = INDEX[box['label']]
-                if label > 6: # omit last 3 classes
+                if label > 3: # omit last 3 classes
                     continue
                 obj = {}
                 obj['name'] = k
@@ -36,7 +36,7 @@ def parse_rect(filename, name):
                     obj['difficult'] = True
                 else:
                     obj['difficult'] = False
-                obj['label'] = min(2, label) # conclue other classes as 1 class
+                obj['label'] = label
                 if obj['name'] not in objects[obj['label']].keys():
                     objects[obj['label']][obj['name']] = []
                 objects[obj['label']][obj['name']].append(obj)
@@ -174,5 +174,7 @@ if __name__ == "__main__":
     eval_Damage = Eval_mAP(3, '../../Data/Labels/test_full.json', args.pred)
     print(eval_Damage.get_result(0))
     print(eval_Damage.get_result(1))
+    #print(eval_Damage.get_result(2))
+    #print(eval_Damage.get_result(3))
     #print(eval_Damage.get_result(2))
 

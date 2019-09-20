@@ -24,7 +24,12 @@ COLORS = [(255, 0, 0), (255, 165, 0), (255, 255, 0),
         (0, 255, 0), (0, 127, 255), (0, 0, 255), (139, 0, 255)]
 
 FONT = cv2.FONT_HERSHEY_SIMPLEX
-LABELS = ['margin', 'interior', 'skel', 'stipp', 'blotch', 'serp', 'background']
+INDEX = {
+        'margin': 0, 'interior': 1, 'skel': 2, 'stipp': 3,
+        'blotch': 4, 'serp': 5, 'scrap': 6, 'normmar': 7, 'normint': 8, 'undef': 9,
+        }
+
+LABEL = ['margin', 'interior', 'skel', 'stipp', 'blotch', 'serp', 'scrap', 'normmar', 'normint', 'undef']
 
 def predict(frames, transform, net, tile_number):
     # tile_number: how many tiles has been computed

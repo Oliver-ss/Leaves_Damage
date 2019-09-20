@@ -9,7 +9,7 @@ test:
 
 PRED = train_log/test/predictions.json
 mAP:
-	python3 ../../scripts/eval/get_mAP.py ${PRED}
+	python3 ../../scripts/eval/get_mAP_multiclass.py ${PRED}
 
 THRES = 0.4
 show:

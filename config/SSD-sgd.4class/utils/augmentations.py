@@ -276,10 +276,10 @@ class RandomSampleCrop(object):
                 centers = (boxes[:, :2] + boxes[:, 2:]) / 2.0
 
                 # mask in all gt boxes that above and to the left of centers
-                m1 = (rect[0] + 50 < centers[:, 0]) * (rect[1] + 50 < centers[:, 1])
+                m1 = (rect[0] + 20 < centers[:, 0]) * (rect[1] + 20 < centers[:, 1])
 
                 # mask in all gt boxes that under and to the right of centers
-                m2 = (rect[2] - 50 > centers[:, 0]) * (rect[3] - 50 > centers[:, 1])
+                m2 = (rect[2] - 20 > centers[:, 0]) * (rect[3] - 20 > centers[:, 1])
 
                 # mask in that both m1 and m2 are true
                 mask = m1 * m2

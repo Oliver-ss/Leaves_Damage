@@ -29,6 +29,16 @@ def load_json(path):
         data = json.load(f)
     return data
 
+def filter_class(classes, gt):
+    ans = []
+    for k in gt.keys():
+        for box in gt[k]:
+            label = INDEX[box['label']]
+            if label in classes:
+                ans.append(k)
+                break
+    return ans
+
 class Damage_Dataset(data.Dataset):
     '''
     input is image, target is annotations for every image
@@ -38,7 +48,7 @@ class Damage_Dataset(data.Dataset):
         self.label_root = label_root
         self.transform = transform
         self.labels = load_json(label_root)
-        self.ids = list(self.labels.keys())
+        self.ids = filter_class((0, 1, 2, 3), self.labels)
 
     def __len__(self):
         return len(self.ids)
