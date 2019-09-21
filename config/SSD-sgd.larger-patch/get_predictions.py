@@ -173,7 +173,7 @@ if __name__ == '__main__':
     net_filepath = args.model
     test_img_file = args.label
     tile = args.tile
-    overlap = 0.15 * tile
+    overlap = int(0.15 * tile)
     batch_size = 8
     skip = 300
     data = test_img(net_filepath, test_img_file, tile, overlap, batch_size, skip)
