@@ -45,7 +45,6 @@ def parse_rect(filename, name, threshold=None):
             elif name == 'pred':
                 obj = {}
                 obj['label'] = int(box[5])
-                print(obj['label'])
                 obj['name'] = k
                 obj['bbox'] = box[:4]
                 obj['score'] = box[4]
