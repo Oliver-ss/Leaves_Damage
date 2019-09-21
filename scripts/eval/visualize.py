@@ -58,7 +58,7 @@ def drawrect(img,pt1,pt2,color,thickness=1,style='dotted'):
     img = drawpoly(img,pts,color,thickness,style)
     return img
 
-def save_img(pred, gt, save_folder='train_log/test_img/', thres=0.6):
+def save_img(pred, gt, save_folder='train_log/test_img/', thres=(0.4, 0.6, 0.5)):
     img_names = list(gt.keys())
     for i in tqdm(range(len(img_names))):
         img_file = img_names[i]
@@ -68,10 +68,10 @@ def save_img(pred, gt, save_folder='train_log/test_img/', thres=0.6):
             xs, ys, xe, ye = box[:4]
             confidence = box[4]
             label = int(box[5])
-            if confidence > thres:
+            if confidence > thres[label]:
                 img = cv2.rectangle(img, (int(xs), int(ys)), (int(xe), int(ye)), COLORS[label], 2)
-                img = cv2.putText(img, str(confidence), (int(xs), int(ys)),
-                        FONT, 2, COLORS[label], 2, cv2.LINE_AA)
+                img = cv2.putText(img, str(np.round(confidence*10,2)), (int(xs), int(ys)),
+                        FONT, 1, COLORS[label], 1, cv2.LINE_AA)
 
         for box in gt[img_file]:
             xs, ys, w, h = box['rect']
@@ -90,9 +90,12 @@ def save_img(pred, gt, save_folder='train_log/test_img/', thres=0.6):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("thres", type=float)
+    parser.add_argument("thres1", type=float)
+    parser.add_argument("thres2", type=float)
+    parser.add_argument("thres3", type=float)
     parser.add_argument("pred", type=str)
     args = parser.parse_args()
+    thres = (args.thres1, args.thres2, args.thres3)
 
     with open(args.pred) as f:
         pred = json.load(f)
@@ -103,5 +106,5 @@ if __name__ == "__main__":
     save_folder = 'train_log/test_img/'
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
-    save_img(pred, gt, save_folder, args.thres)
+    save_img(pred, gt, save_folder, thres)
 
