@@ -232,11 +232,11 @@ class RandomSampleCrop(object):
         height, width, _ = image.shape
         while True:
             # randomly choose a mode
-            mode = random.choice(self.sample_options)
+            #mode = random.choice(self.sample_options)
 
-            iou_thre = mode
-            if iou_thre is None:
-                iou_thre = float('-inf')
+            #iou_thre = mode
+            #if iou_thre is None:
+            #    iou_thre = float('-inf')
 
             # max trails (50)
             for i in range(1000):
