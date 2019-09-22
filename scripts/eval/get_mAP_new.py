@@ -7,6 +7,7 @@
 import numpy as np
 import os
 import json
+
 INDEX = {
         'margin': 0, 'interior': 1, 'skel': 2, 'stipp': 3,
         'blotch': 4, 'serp': 5, 'scrap': 6, 'normmar': 7, 'normint': 8, 'undef': 9,
@@ -57,7 +58,7 @@ class Eval_mAP:
         self.num_classes = num_classes
         self.gt = parse_rect(gt_file, 'gt')
         self.pred = parse_rect(pred_file, 'pred')
-    
+
     def get_result(self, class_index, ovthresh=0.5):
         gt_rects = self.gt[class_index] # a dict, keys are img names
         pred_rects = self.pred[class_index] # a list of all predicted bboxes
