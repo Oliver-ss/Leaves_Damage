@@ -11,11 +11,13 @@ import os
 from tqdm import tqdm
 COLORS = ([255,0,0], [0,255,0], [0,0,255])
 FONT = cv2.FONT_HERSHEY_SIMPLEX
+
 INDEX = {
-        'margin': 0, 'interior': 1, 'skel': 2, 'scrap':3, 'stipp': 4,
-        'blotch': 5, 'serp': 6, 'undef': 7, 'normmar': 8, 'normint': 9,
+        'margin': 0, 'interior': 1, 'skel': 2, 'stipp': 3,
+        'blotch': 4, 'serp': 5, 'scrap': 6, 'normmar': 7, 'normint': 8, 'undef': 9,
         }
 
+LABEL = ['margin', 'interior', 'skel', 'stipp', 'blotch', 'serp', 'scrap', 'normmar', 'normint', 'undef']
 
 
 def drawline(img,pt1,pt2,color,thickness=1,style='dotted',gap=10):

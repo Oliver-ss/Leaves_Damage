@@ -11,6 +11,8 @@ PRED = train_log/test/predictions.json
 mAP:
 	python3 ../../scripts/eval/get_mAP.py ${PRED}
 
-THRES = 0.4
+THRES1 = 0.4
+THRES2 = 0.6
+THRES3 = 0.5
 show:
-	python3 ../../scripts/eval/visualize.py ${THRES} ${PRED}
+	python3 ../../scripts/eval/visualize.py ${THRES1} ${THRES2} ${THRES3} ${PRED}
