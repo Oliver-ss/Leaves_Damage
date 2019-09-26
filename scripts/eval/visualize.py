@@ -10,6 +10,7 @@ import numpy as np
 import os
 from tqdm import tqdm
 COLORS = ([255,0,0], [0,255,0], [0,0,255])
+
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 
 INDEX = {
@@ -60,7 +61,7 @@ def drawrect(img,pt1,pt2,color,thickness=1,style='dotted'):
     img = drawpoly(img,pts,color,thickness,style)
     return img
 
-def save_img(pred, gt, save_folder='train_log/test_img/', thres=(0.4, 0.6, 0.5)):
+def save_img(pred, gt, save_folder='train_log/test_img/', thres=(0.4, 0.6)):
     img_names = list(gt.keys())
     for i in tqdm(range(len(img_names))):
         img_file = img_names[i]
@@ -70,20 +71,22 @@ def save_img(pred, gt, save_folder='train_log/test_img/', thres=(0.4, 0.6, 0.5))
             xs, ys, xe, ye = box[:4]
             confidence = box[4]
             label = int(box[5])
+            if label > 1:
+                continue
             if confidence > thres[label]:
-                img = cv2.rectangle(img, (int(xs), int(ys)), (int(xe), int(ye)), COLORS[label], 2)
+                img = cv2.rectangle(img, (int(xs), int(ys)), (int(xe), int(ye)), COLORS[label], 4)
                 img = cv2.putText(img, str(np.round(confidence*10,2)), (int(xs), int(ys)),
-                        FONT, 1, COLORS[label], 1, cv2.LINE_AA)
+                        FONT, 2, COLORS[label], 2, cv2.LINE_AA)
 
         for box in gt[img_file]:
             xs, ys, w, h = box['rect']
             xe, ye = xs + w, ys + h
             label = INDEX[box['label']]
-            if label > 6:
+            if label > 1:
                 continue
-            else:
-                label = min(label, 2)
-            img = drawrect(img, (int(xs), int(ys)), (int(xe), int(ye)), COLORS[label], 2, style='dash')
+            #else:
+            #    label = min(label, 2)
+            img = drawrect(img, (int(xs), int(ys)), (int(xe), int(ye)), COLORS[label], 4, style='dash')
 
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         name = img_file.split('/')[-1]
@@ -94,10 +97,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("thres1", type=float)
     parser.add_argument("thres2", type=float)
-    parser.add_argument("thres3", type=float)
+    #parser.add_argument("thres3", type=float)
     parser.add_argument("pred", type=str)
     args = parser.parse_args()
-    thres = (args.thres1, args.thres2, args.thres3)
+    thres = (args.thres1, args.thres2)
 
     with open(args.pred) as f:
         pred = json.load(f)
