@@ -175,10 +175,11 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("pred", type=str)
+    parser.add_argument("gt", type=str)
     args = parser.parse_args()
     #print(parse_rect("../../Data/Labels/label_test_new.json", 'gt'))
     #print(parse_rect("../../config/SSD-sgd/train_log/test/predictions.json", 'pred'))
-    eval_Damage = Eval_mAP(3, '../../Data/Labels/test_full.json', args.pred)
+    eval_Damage = Eval_mAP(3, args.gt, args.pred)
     print(eval_Damage.get_result(0))
     print(eval_Damage.get_result(1))
     #print(eval_Damage.get_result(2))

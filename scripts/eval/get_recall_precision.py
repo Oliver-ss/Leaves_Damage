@@ -156,8 +156,8 @@ def get_recall_precision(gt_filepath, pred_filepath, class_threshold, save_filep
 
 
 if __name__ == '__main__':
-    gt_filepath = '../../Data/Labels/test_full.json'
-    pred_filepath = 'train_log/test/predictions.json'
+    gt_filepath = '../../Data/Labels/label_val_new.json'
+    pred_filepath = 'train_log/test/validation_400.json'
     save_filepath = 'train_log/threshold_R_P.csv'
     for i in np.arange(0.95, 0, -0.05):
         class_threshold = [np.round(i, 2), 0]
