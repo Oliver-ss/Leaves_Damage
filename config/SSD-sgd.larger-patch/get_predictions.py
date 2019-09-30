@@ -100,11 +100,11 @@ def test_img(net_filepath, img_folder, tiles, batch_size, skip=300):
         labels = json.load(f)
     img_names = list(labels.keys())
     data = {}
-    for i in tqdm(range(len(img_names))):
+    for k in tqdm(range(len(img_names))):
         dets = []
         for tile in tiles:
-            over = int(0.15 * tile)
-            img_file = img_names[i]
+            overlap = int(0.15 * tile)
+            img_file = img_names[k]
             img = cv2.imread(img_file)
             img = img[:,:,::-1]
 
@@ -145,7 +145,7 @@ def test_img(net_filepath, img_folder, tiles, batch_size, skip=300):
                 score = bbox[i]['score']
                 dets.append([xs, ys, xe, ye, score, class_index])
         #print(len(dets))
-        keep = nms(dets, 0.5)
+        keep = nms(dets, 0.2)
         #print(len(keep))
         data[img_file] = keep
     return data
